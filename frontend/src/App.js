@@ -1,24 +1,34 @@
-import logo from './logo.svg';
+import { Route, Routes, BrowserRouter } from "react-router-dom";
+import { Suspense, lazy } from "react";
 import './App.css';
+import Loading from "./AppUtils/Loading.tsx";
+import Login from "./Pages/Login/Login.tsx";
+import PublicRoute from "./AppUtils/PublicRoute.tsx";
+import ProtectedRoute from "./AppUtils/ProtectedRoute.tsx";
+
+const SignUp = lazy(() => import("./Pages/Signup/Signup.tsx"));
+const Home = lazy(() => import("./Pages/Home/Home.tsx"));
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <Suspense fallback={<Loading />}>
+        <Routes>
+          <Route path="/signup" element={
+            <PublicRoute><SignUp /></PublicRoute>} />
+          <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
+
+          <Route
+            path="/"
+            element={
+              <ProtectedRoute>
+                <Home />
+              </ProtectedRoute>
+            }
+          />
+        </Routes>
+      </Suspense>
+    </BrowserRouter>
   );
 }
 
