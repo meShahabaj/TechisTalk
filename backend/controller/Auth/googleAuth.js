@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import User from "../models/UserSchema.js";
+import User from "../../models/UserSchema.js";
 import { OAuth2Client } from "google-auth-library";
 
 // STEP 1: Redirect user to Google

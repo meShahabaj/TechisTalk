@@ -1,10 +1,10 @@
 import express from "express";
-import { signup, verifyOtp } from "../controller/signupController.js";
-import { login } from "../controller/loginController.js";
-import { checkAuthController } from "../controller/checkAuthController.js";
-import { logoutController } from "../controller/logoutController.js";
-import { googleAuthCallback, googleAuthRedirect } from "../controller/googleAuth.js";
-import { deleteUser } from "../controller/deleteUser.js";
+import { signup, verifyOtp } from "../controller/Auth/signupController.js";
+import { login } from "../controller/Auth/loginController.js";
+import { checkAuthController } from "../controller/Auth/checkAuthController.js";
+import { logoutController } from "../controller/Auth/logoutController.js";
+import { googleAuthCallback, googleAuthRedirect } from "../controller/Auth/googleAuth.js";
+import { deleteUser } from "../controller/Auth/deleteUser.js";
 
 const authRouter = express.Router();
 

@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import User from "../models/UserSchema.js";
+import User from "../../models/UserSchema.js";
 
 export const deleteUser = async (req, res) => {
 

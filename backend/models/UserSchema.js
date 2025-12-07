@@ -28,7 +28,27 @@ const userSchema = new mongoose.Schema(
             // Optional: store refresh token for session management
         },
         otp: { type: String },
-        otpExpires: { type: Date },
+        otpExpires: { type: Date }, friendRequests: [
+            {
+                from: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+                createdAt: { type: Date, default: Date.now }
+            }
+        ],
+        friendRequests: [
+            {
+                from: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+                createdAt: { type: Date, default: Date.now }
+            }
+        ],
+
+        friends: [
+            {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "User"
+            }
+        ],
+
+
 
         isVerified: {
             type: Boolean,

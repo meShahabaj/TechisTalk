@@ -17,7 +17,6 @@ function App() {
           <Route path="/signup" element={
             <PublicRoute><SignUp /></PublicRoute>} />
           <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
-
           <Route
             path="/"
             element={
