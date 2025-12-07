@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
+import GoogleAuthButton from "../Signup/GoogleAuthButton.tsx"
 
 const Login = () => {
     // Form state
@@ -28,7 +29,7 @@ const Login = () => {
         setSuccess(null);
 
         try {
-            const response = await axios.post("http://localhost:5000/api/auth/login", {
+            const response = await axios.post("http://localhost:5000/auth/login", {
                 email: formData.email,
                 password: formData.password,
             }, { withCredentials: true });
@@ -81,6 +82,7 @@ const Login = () => {
                         {loading ? "Logging in..." : "Login"}
                     </button>
                 </form>
+                <GoogleAuthButton />
                 {error && <p className="text-red-500 text-sm mt-2 text-center">{error}</p>}
                 {success && <p className="text-green-500 text-sm mt-2 text-center">{success}</p>}
                 <p className="mt-4 text-center text-gray-600 text-sm">

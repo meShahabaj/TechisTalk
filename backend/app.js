@@ -22,7 +22,7 @@ app.use(express.json());
 // Add cookie-parser middleware (must be before routes)
 app.use(cookieParser());
 
-app.use("/api/auth", authRouter);
+app.use("/auth", authRouter);
 
 // Start server
 app.listen(process.env.PORT, () => {
