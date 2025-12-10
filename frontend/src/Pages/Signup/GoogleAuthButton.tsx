@@ -1,6 +1,8 @@
+const BACKEND_API = process.env.REACT_APP_BACKEND_API
+
 const GoogleAuthButton = () => {
     const handleGoogleAuth = () => {
-        window.location.href = "http://localhost:5000/auth/google";
+        window.location.href = `${BACKEND_API}/auth/google`;
     };
 
     return (

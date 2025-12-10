@@ -1,37 +1,19 @@
+import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
-import axios from "axios";
-import { JSX, useEffect, useState } from "react";
-import Loading from "./Loading.tsx";
+import { RootState } from "../Redux/store";
 
-const PublicRoute = ({ children }: { children: JSX.Element }) => {
-    const [loading, setLoading] = useState(true);
-    const [isAuth, setIsAuth] = useState(false);
+interface PublicRouteProps {
+    children: React.ReactNode;
+}
 
-    useEffect(() => {
-        const checkAuth = async () => {
-            try {
-                const res = await axios.get("http://localhost:5000/auth/checkAuth", {
-                    withCredentials: true
-                });
+const PublicRoute: React.FC<PublicRouteProps> = ({ children }) => {
+    const { isAuthenticated } = useSelector((state: RootState) => state.auth);
 
-                if (res.data.auth === true) {
+    if (isAuthenticated) {
+        return <Navigate to="/" replace />;
+    }
 
-                    setIsAuth(true);
-                } else {
-                    setIsAuth(false);
-                }
-            } catch {
-                setIsAuth(false);
-            }
-            setLoading(false);
-        };
-
-        checkAuth();
-    }, []);
-
-    if (loading) return <Loading />;
-
-    return isAuth ? <Navigate to="/" /> : children;
+    return <>{children}</>;
 };
 
 export default PublicRoute;

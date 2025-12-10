@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import GoogleAuthButton from "./GoogleAuthButton.tsx";
+const BACKEND_API = process.env.REACT_APP_BACKEND_API
 
 const SignUp = () => {
     const [formData, setFormData] = useState({
@@ -44,7 +45,7 @@ const SignUp = () => {
         setLoading(true);
         try {
             const res = await axios.post(
-                "http://localhost:5000/auth/signup",
+                `${BACKEND_API}/auth/signup`,
                 formData,
                 { withCredentials: true }
             );
@@ -69,7 +70,7 @@ const SignUp = () => {
 
         try {
             const res = await axios.post(
-                "http://localhost:5000/auth/verify-otp",
+                `${BACKEND_API}/auth/verify-otp`,
                 { userId, otp },
                 { withCredentials: true }
             );

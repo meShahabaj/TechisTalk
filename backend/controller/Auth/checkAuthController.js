@@ -12,7 +12,8 @@ export const checkAuthController = async (req, res, next) => {
     try {
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
         const user = await User.findById(decoded.id).select("-password");
-        return res.json({ auth: true, user: user });
+        const sendData = { id: user._id, username: user.username }
+        return res.json({ user: sendData });
     } catch (err) {
         next(err);
     }

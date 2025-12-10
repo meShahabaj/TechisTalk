@@ -15,51 +15,42 @@ const userSchema = new mongoose.Schema(
 
         password: {
             type: String,
-            // Only required for regular signup users
         },
 
         googleId: {
             type: String,
-            // Only present if the user signed up with Google
         },
 
         refreshToken: {
             type: String,
-            // Optional: store refresh token for session management
         },
+
         otp: { type: String },
-        otpExpires: { type: Date }, friendRequests: [
-            {
-                from: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
-                createdAt: { type: Date, default: Date.now }
-            }
-        ],
+        otpExpires: { type: Date },
+
         friendRequests: [
             {
-                from: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
-                createdAt: { type: Date, default: Date.now }
+                id: { type: String },
+                createdAt: { type: Date, default: Date.now },
             }
         ],
 
         friends: [
             {
-                type: mongoose.Schema.Types.ObjectId,
-                ref: "User"
+                id: { type: String },
+                createdAt: { type: Date, default: Date.now },
             }
         ],
-
-
 
         isVerified: {
             type: Boolean,
             default: false,
-            // Optional: email verification for regular signup
         },
     },
     { timestamps: true }
 );
 
-// Optional: prevent sending sensitive fields in responses
+// Prevent sending sensitive info
 userSchema.methods.toJSON = function () {
     const obj = this.toObject();
     delete obj.password;
