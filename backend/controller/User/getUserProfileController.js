@@ -1,6 +1,6 @@
 import User from "../../models/UserSchema.js";
 
-export const getUserProfileById = async (req, res) => {
+export const getUserProfileController = async (req, res) => {
 
     try {
         const userId = req.user._id;  // ID from auth middleware

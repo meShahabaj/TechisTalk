@@ -65,7 +65,7 @@ const Profile = () => {
 
         try {
             setLoading(true);
-            await axios.delete(`${BACKEND_API}/auth/delete`, {
+            await axios.delete(`${BACKEND_API}/user/delete`, {
                 withCredentials: true
             });
             navigate("/signup");

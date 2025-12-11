@@ -5,6 +5,9 @@ import cookieParser from "cookie-parser";
 import authRouter from "./routes/authRoute.js";
 import connectDB from "./config/DB.js";
 import userRouter from "./routes/userRoute.js";
+import accountsRouter from "./routes/accountsRouter.js";
+import friendRequestRouter from "./routes/friendRequestRouter.js";
+import friendRouter from "./routes/friendRouter.js";
 
 dotenv.config();
 
@@ -24,7 +27,10 @@ app.use(express.json());
 app.use(cookieParser());
 
 app.use("/auth", authRouter);
+app.use("/accounts", accountsRouter);
 app.use("/user", userRouter);
+app.use("/friend-request", friendRequestRouter);
+app.use("/friend", friendRouter);
 
 // Start server
 app.listen(process.env.PORT, () => {

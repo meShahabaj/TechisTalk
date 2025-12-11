@@ -10,15 +10,15 @@ import PublicRoute from "./AppUtils/PublicRoute.tsx";
 import ProtectedRoute from "./AppUtils/ProtectedRoute.tsx";
 import { useDispatch } from "react-redux";
 import { authAdd } from "./Redux/Slice/authSlice.tsx";
-import SearchFriends from "./Pages/Home/SearchFriends.tsx";
+import SearchFriends from "./Pages/Home/SearchAccounts.tsx";
 import FriendRequests from "./Pages/Home/FriendRequests.tsx";
 import Friends from "./Pages/Home/Friends.tsx";
 import Profile from "./Pages/Home/Profile.tsx";
 
 // Page with lazy load
-const SignUp = lazy(() => import("./Pages/Signup/Signup.tsx"));
-const Home = lazy(() => import("./Pages/Home.tsx"));
-const Login = lazy(() => import("./Pages/Login/Login.tsx"));
+const SignUp = lazy(() => import("./Pages/Auth/Signup.tsx"));
+const Home = lazy(() => import("./Pages/Home/Home.tsx"));
+const Login = lazy(() => import("./Pages/Auth/Login.tsx"));
 const BACKEND_API = process.env.REACT_APP_BACKEND_API;
 function App() {
 
@@ -47,12 +47,13 @@ function App() {
       <Suspense fallback={<Loading />}>
         <Routes>
 
+          {/* Auth Routes */}
           <Route
             path="/signup" element={<PublicRoute><SignUp /></PublicRoute>} />
-
           <Route
             path="/login" element={<PublicRoute><Login /></PublicRoute>} />
 
+          {/* Parent Route */}
           <Route path="/" element={<ProtectedRoute><Home /></ProtectedRoute>}>
 
             <Route path="search-friends" element={

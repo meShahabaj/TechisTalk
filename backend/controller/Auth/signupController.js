@@ -1,6 +1,6 @@
 import bcrypt from "bcryptjs";
 import User from "../../models/UserSchema.js";
-import { sendOtp } from "./sendOtp.js";
+import { sendOtp } from "./sendOtpController.js";
 import crypto from "crypto";
 import jwt from "jsonwebtoken";
 

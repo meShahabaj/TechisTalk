@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useAppSelector } from "../../Redux/useAppSelector.tsx";
 
-const SearchFriends = () => {
+const SearchAccounts = () => {
     const BACKEND_API = process.env.REACT_APP_BACKEND_API
     const fromUserId = useAppSelector(state => state.auth.auth?.id);
 
@@ -12,7 +12,7 @@ const SearchFriends = () => {
     useEffect(() => {
         const loadUsers = async () => {
             try {
-                const res = await axios.get(`${BACKEND_API}/user/all`, {
+                const res = await axios.get(`${BACKEND_API}/accounts/all`, {
                     withCredentials: true,
                 });
                 setUsers(res.data.users);
@@ -27,7 +27,7 @@ const SearchFriends = () => {
     const sendRequest = async (toUserId: string) => {
         try {
             await axios.post(
-                `${BACKEND_API}/user/requests/send`,
+                `${BACKEND_API}/friend-request/send`,
                 { fromUserId, toUserId },
                 { withCredentials: true }
             );
@@ -102,4 +102,4 @@ const SearchFriends = () => {
     );
 };
 
-export default SearchFriends;
+export default SearchAccounts;

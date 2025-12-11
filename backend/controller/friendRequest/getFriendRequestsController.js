@@ -1,6 +1,6 @@
 import User from "../../models/UserSchema.js";
 
-export const getFriendRequests = async (req, res) => {
+export const getFriendRequestsController = async (req, res) => {
     try {
         const userId = req.user._id;
 

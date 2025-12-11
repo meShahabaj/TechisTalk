@@ -9,7 +9,7 @@ const FriendRequests = () => {
 
     const loadRequests = async () => {
         try {
-            const res = await axios.get(`${BACKEND_API}/user/requests`, {
+            const res = await axios.get(`${BACKEND_API}/friend-request/get`, {
                 withCredentials: true,
             });
             setRequests(res.data.requests);
@@ -26,7 +26,7 @@ const FriendRequests = () => {
 
     const acceptRequest = async (fromUserId: string) => {
         await axios.post(
-            `${BACKEND_API}/user/accept`,
+            `${BACKEND_API}/friend-request/accept`,
             { fromUserId },
             { withCredentials: true }
         );
@@ -35,7 +35,7 @@ const FriendRequests = () => {
 
     const rejectRequest = async (fromUserId: string) => {
         await axios.post(
-            `${BACKEND_API}/user/reject`,
+            `${BACKEND_API}/friend-request/reject`,
             { fromUserId },
             { withCredentials: true }
         );

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
-import GoogleAuthButton from "../Signup/GoogleAuthButton.tsx";
+import GoogleAuthButton from "./GoogleAuthButton.tsx";
 const BACKEND_API = process.env.REACT_APP_BACKEND_API
 
 const Login = () => {

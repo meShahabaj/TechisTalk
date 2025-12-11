@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 import User from "../../models/UserSchema.js";
 
-export const deleteUser = async (req, res) => {
+export const deleteUserController = async (req, res) => {
 
     try {
         // 1. Read token from cookie

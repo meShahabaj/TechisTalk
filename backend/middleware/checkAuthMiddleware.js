@@ -1,7 +1,7 @@
 import User from "../models/UserSchema.js";
 import jwt from "jsonwebtoken";
 
-export const checkAuth = async (req, res, next) => {
+export const checkAuthMiddleware = async (req, res, next) => {
     const token = req.cookies.token;
 
     if (!token) {

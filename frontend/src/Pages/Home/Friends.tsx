@@ -9,7 +9,7 @@ const Friends = () => {
 
     const loadFriends = async () => {
         try {
-            const res = await axios.get(`${BACKEND_API}/user/friends`, {
+            const res = await axios.get(`${BACKEND_API}/friend/get`, {
                 withCredentials: true,
             });
             setfriends(res.data.friends);
@@ -28,7 +28,7 @@ const Friends = () => {
 
         try {
             await axios.post(
-                `${BACKEND_API}/users/remove-friend`,
+                `${BACKEND_API}/friend/remove`,
                 { friendId },
                 { withCredentials: true }
             );

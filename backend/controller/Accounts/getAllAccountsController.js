@@ -1,6 +1,6 @@
 import User from "../../models/UserSchema.js";
 
-export const getAllUsers = async (req, res) => {
+export const getAllAccountsController = async (req, res) => {
 
     try {
         const users = await User.find();
