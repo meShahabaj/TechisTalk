@@ -16,6 +16,7 @@
     "socket.io": "^4.8.1",
     "ws": "^8.18.3"
   },
+  "type": "module",
   "scripts": {
     "start": "nodemon app.js",
     "deploy": "node app.js",
