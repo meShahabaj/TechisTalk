@@ -71,7 +71,7 @@ const Friends = () => {
                                 </div>
 
                                 <button className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600"
-                                    onClick={() => navigate(`/chat/${friend.id}`)}>
+                                    onClick={() => navigate(`/#/chat/${friend.id}`)}>
                                     Talk
                                 </button>
 

@@ -1,4 +1,4 @@
-import { Route, Routes, BrowserRouter } from "react-router-dom";
+import { Route, Routes, HashRouter } from "react-router-dom";
 import { Suspense, lazy, useEffect, useState } from "react";
 import axios from "axios";
 
@@ -44,7 +44,7 @@ function App() {
 
 
   return (
-    <BrowserRouter>
+    <HashRouter>
       <Suspense fallback={<Loading />}>
         <Routes>
 
@@ -75,7 +75,7 @@ function App() {
 
         </Routes>
       </Suspense>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
 
