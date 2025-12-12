@@ -17,7 +17,8 @@
     "ws": "^8.18.3"
   },
   "scripts": {
-    "start": "nodemon app.js"
+    "start": "nodemon app.js",
+    "build": "echo \"No build needed for Express\""
   },
   "devDependencies": {
     "@types/cors": "^2.8.19",
