@@ -19,7 +19,6 @@
   "type": "module",
   "scripts": {
     "start": "nodemon app.js",
-    "deploy": "node app.js",
     "build": "echo \"No build needed for Express\""
   },
   "devDependencies": {
