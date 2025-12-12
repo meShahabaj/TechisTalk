@@ -1,9 +1,11 @@
 import { useState } from "react";
 import axios from "axios";
 import GoogleAuthButton from "./GoogleAuthButton.tsx";
+import { Navigate, useNavigate } from "react-router-dom";
 const BACKEND_API = process.env.REACT_APP_BACKEND_API
 
 const SignUp = () => {
+    const navigate = useNavigate();
     const [formData, setFormData] = useState({
         username: "",
         email: "",
@@ -76,7 +78,7 @@ const SignUp = () => {
             );
 
             setSuccess("Email verified successfully! You can now login.");
-            window.location.reload();
+            navigate("/search-friends")
             setUserId(null); // hide OTP input
             setFormData({ username: "", email: "", password: "" });
         } catch (err: any) {
@@ -88,78 +90,101 @@ const SignUp = () => {
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-blue-400 via-black-500 to-blue-500 p-6">
-            <div className="bg-white rounded-xl shadow-lg p-8 max-w-md w-full">
-                <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center">
-                    Create Account
-                </h2>
+        <div className="relative min-h-screen w-full overflow-hidden">
 
-                {!userId ? (
-                    <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
-                        <input
-                            type="text"
-                            name="username"
-                            placeholder="User Name"
-                            value={formData.username}
-                            onChange={handleChange}
-                            className="p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
-                        />
-                        <input
-                            type="email"
-                            name="email"
-                            placeholder="Email"
-                            value={formData.email}
-                            onChange={handleChange}
-                            className="p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
-                        />
-                        <input
-                            type="password"
-                            name="password"
-                            placeholder="Password"
-                            value={formData.password}
-                            onChange={handleChange}
-                            className="p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
-                        />
-                        <button
-                            type="submit"
-                            className={`w-full bg-blue-500 text-white py-3 rounded-lg font-semibold transition-colors ${loading ? "opacity-70 cursor-not-allowed" : "hover:bg-blue-600"
-                                }`}
-                            disabled={loading}
-                        >
-                            {loading ? "Signing Up..." : "Sign Up"}
-                        </button>
-                    </form>
-                ) : (
-                    <div className="flex flex-col gap-4">
-                        <input
-                            type="text"
-                            value={otp}
-                            onChange={handleOtpChange}
-                            placeholder="Enter OTP"
-                            className="p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
-                        />
-                        <button
-                            onClick={handleVerifyOtp}
-                            className={`w-full bg-green-500 text-white py-3 rounded-lg font-semibold transition-colors ${loading ? "opacity-70 cursor-not-allowed" : "hover:bg-green-600"
-                                }`}
-                            disabled={loading}
-                        >
-                            {loading ? "Verifying..." : "Verify OTP"}
-                        </button>
+            {/* Background image */}
+            <img
+                src="/signup_img.jpg"
+                alt="Background"
+                className="absolute inset-0 w-full h-full object-cover z-0"
+            />
+
+            {/* Left gradient overlay for extra space */}
+            <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-purple-800/40 to-transparent z-[1]" />
+
+            {/* Floating form container */}
+            <div className="relative z-[2] min-h-screen flex items-center px-8 md:px-20">
+
+                <div className="bg-white/10 backdrop-blur-xl border border-white/20 shadow-2xl rounded-2xl p-10 w-full max-w-md">
+
+                    <h2 className="text-3xl font-bold text-white text-center mb-6">
+                        Create Account
+                    </h2>
+                    {!userId ? (
+
+                        <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
+
+                            <input
+                                type="text"
+                                name="username"
+                                placeholder="User Name"
+                                value={formData.username}
+                                onChange={handleChange}
+                                className="p-3 bg-white/20 text-white placeholder-gray-300 border border-white/30 rounded-lg focus:ring-2 focus:ring-purple-400 outline-none"
+                            />
+                            <input
+                                type="email"
+                                name="email"
+                                placeholder="Email"
+                                value={formData.email}
+                                onChange={handleChange}
+                                className="p-3 bg-white/20 text-white placeholder-gray-300 border border-white/30 rounded-lg focus:ring-2 focus:ring-purple-400 outline-none"
+                            />
+
+                            <input
+                                type="password"
+                                name="password"
+                                placeholder="Password"
+                                value={formData.password}
+                                onChange={handleChange}
+                                className="p-3 bg-white/20 text-white placeholder-gray-300 border border-white/30 rounded-lg focus:ring-2 focus:ring-purple-400 outline-none"
+                            />
+
+                            <button
+                                type="submit"
+                                disabled={loading}
+                                className={`w-full py-3 rounded-lg text-white font-semibold bg-purple-600 hover:bg-purple-700 transition ${loading ? "opacity-60 cursor-not-allowed" : ""
+                                    }`}
+                            >
+                                {loading ? "Signing Up..." : "Sign Up"}
+                            </button>
+                        </form>
+                    ) : (
+                        <div className="flex flex-col gap-4">
+                            <input
+                                type="text"
+                                value={otp}
+                                onChange={handleOtpChange}
+                                placeholder="Enter OTP"
+                                className="p-3 bg-white/20 text-white placeholder-gray-300 border border-white/30 rounded-lg focus:ring-2 focus:ring-purple-400 outline-none"
+                            />
+                            <button
+                                onClick={handleVerifyOtp}
+                                className={`w-full py-3 rounded-lg text-white font-semibold bg-purple-600 hover:bg-purple-700 transition ${loading ? "opacity-60 cursor-not-allowed" : ""
+                                    }`}
+                                disabled={loading}
+                            >
+                                {loading ? "Verifying..." : "Verify OTP"}
+                            </button>
+                        </div>)}
+
+                    < div className="mt-4">
+                        <GoogleAuthButton />
                     </div>
-                )}
 
-                <GoogleAuthButton />
-                {error && <p className="text-red-500 text-sm mt-2 text-center">{error}</p>}
-                {success && <p className="text-green-500 text-sm mt-2 text-center">{success}</p>}
-                <p className="mt-4 text-center text-gray-600 text-sm">
-                    Already have an account?{" "}
-                    <a href="/#/login" className="text-blue-500 hover:underline">
-                        Login
-                    </a>
-                </p>
+                    {error && <p className="text-red-400 text-center mt-3">{error}</p>}
+                    {success && <p className="text-green-400 text-center mt-3">{success}</p>}
+
+                    <p className="text-center mt-4 text-gray-300">
+                        Already have an account?{" "}
+                        <a href="/#/Login" className="text-black-400 hover:underline ml-1">
+                            Login
+                        </a>
+                    </p>
+                </div>
             </div>
-        </div>
+
+        </div >
     );
 };
 

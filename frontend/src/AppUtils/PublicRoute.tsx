@@ -10,7 +10,7 @@ const PublicRoute: React.FC<PublicRouteProps> = ({ children }) => {
     const { isAuthenticated } = useSelector((state: RootState) => state.auth);
 
     if (isAuthenticated) {
-        return <Navigate to="/" replace />;
+        return <Navigate to="/search-friends" replace />;
     }
 
     return <>{children}</>;

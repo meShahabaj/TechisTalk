@@ -1,11 +1,7 @@
-Understood — you want a **professional and safe README** that **does not expose sensitive details**, internal architecture, or anything that could compromise backend logic or security.
-
-Below is a **minimal, high-level, safe-to-share README** suitable for public repositories.
-No internal models, no route lists, no structure, no sensitive tech flow, no endpoints, nothing that could be abused.
 
 ---
 
-# 🌐 Social App
+# 🌐 Techis Talk
 
 A modern full-stack social platform with authentication, account verification, and basic social interactions.
 This repository contains **non-sensitive, high-level documentation only**, suitable for public sharing.

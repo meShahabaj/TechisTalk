@@ -34,6 +34,7 @@ const Chat = () => {
         if (!user?.id) return;
 
         const ws = new WebSocket(
+            // `ws://localhost:5000/chat-socket?userId=${user.id}`
             `${BACKEND_API}/chat-socket?userId=${user.id}`
         );
         socket.current = ws;

@@ -48,7 +48,7 @@ const Friends = () => {
 
     return (
         <div className="p-6 max-w-xl mx-auto">
-            <h1 className="text-2xl font-bold mb-4">Your Friends</h1>
+            <h1 className="text-2xl font-bold mb-4 color-blue">Your Friends</h1>
 
             {friends.length === 0 ? (
                 <p className="text-gray-500">You have no friends yet.</p>
