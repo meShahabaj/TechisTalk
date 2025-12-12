@@ -58,6 +58,8 @@ export const signup = async (req, res, next) => {
     }
 };
 export const verifyOtp = async (req, res, next) => {
+    const isProduction = process.env.NODE_ENV === "production";
+
     try {
         const { userId, otp } = req.body;
 
@@ -87,8 +89,8 @@ export const verifyOtp = async (req, res, next) => {
 
         res.cookie("token", token, {
             httpOnly: true,
-            secure: process.env.NODE_ENV === "production",
-            sameSite: "lax",
+            secure: isProduction,           // true on Render, false on localhost
+            sameSite: isProduction ? "none" : "lax",
             maxAge: 7 * 24 * 60 * 60 * 1000,
         });
 

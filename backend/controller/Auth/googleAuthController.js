@@ -62,12 +62,12 @@ export const googleAuthCallback = async (req, res) => {
 
         res.cookie("token", jwtToken, {
             httpOnly: true,
-            secure: false,
-            sameSite: "lax",
+            secure: true,
+            sameSite: "none",
             maxAge: 7 * 24 * 60 * 60 * 1000,
         });
 
-        res.redirect("http://localhost:3000");
+        res.redirect(process.env.FRONTEND_API);
     } catch (err) {
         console.error("Google authentication error:", err);
         res.status(500).json({ message: "Google authentication failed" });
