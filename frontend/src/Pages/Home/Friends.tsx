@@ -1,8 +1,11 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import Loading from "../../AppUtils/Loading.tsx"
+import { useNavigate } from "react-router-dom";
 
 const Friends = () => {
+
+    const navigate = useNavigate();
     const BACKEND_API = process.env.REACT_APP_BACKEND_API;
     const [friends, setfriends] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
@@ -67,7 +70,8 @@ const Friends = () => {
 
                                 </div>
 
-                                <button className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600">
+                                <button className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600"
+                                    onClick={() => navigate(`/chat/${friend.id}`)}>
                                     Talk
                                 </button>
 

@@ -14,6 +14,7 @@ import SearchFriends from "./Pages/Home/SearchAccounts.tsx";
 import FriendRequests from "./Pages/Home/FriendRequests.tsx";
 import Friends from "./Pages/Home/Friends.tsx";
 import Profile from "./Pages/Home/Profile.tsx";
+import Chat from "./Pages/Home/Chat.tsx";
 
 // Page with lazy load
 const SignUp = lazy(() => import("./Pages/Auth/Signup.tsx"));
@@ -52,6 +53,8 @@ function App() {
             path="/signup" element={<PublicRoute><SignUp /></PublicRoute>} />
           <Route
             path="/login" element={<PublicRoute><Login /></PublicRoute>} />
+
+          <Route path="/chat/:toid" element={<Chat />} />
 
           {/* Parent Route */}
           <Route path="/" element={<ProtectedRoute><Home /></ProtectedRoute>}>
