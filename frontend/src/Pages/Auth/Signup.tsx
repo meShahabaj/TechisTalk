@@ -154,7 +154,7 @@ const SignUp = () => {
                 {success && <p className="text-green-500 text-sm mt-2 text-center">{success}</p>}
                 <p className="mt-4 text-center text-gray-600 text-sm">
                     Already have an account?{" "}
-                    <a href="/login" className="text-blue-500 hover:underline">
+                    <a href="/#/login" className="text-blue-500 hover:underline">
                         Login
                     </a>
                 </p>

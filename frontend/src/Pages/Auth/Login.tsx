@@ -88,7 +88,7 @@ const Login = () => {
                 {error && <p className="text-red-500 text-sm mt-2 text-center">{error}</p>}
                 {success && <p className="text-green-500 text-sm mt-2 text-center">{success}</p>}
                 <p className="mt-4 text-center text-gray-600 text-sm">
-                    Don't have an account? <a href="/signup" className="text-purple-500 hover:underline">Sign Up</a>
+                    Don't have an account? <a href="/#/signup" className="text-purple-500 hover:underline">Sign Up</a>
                 </p>
             </div>
         </div>

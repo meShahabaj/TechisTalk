@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useAppSelector } from "../../Redux/useAppSelector.tsx";
 import { useParams } from "react-router-dom";
+const BACKEND_API = process.env.REACT_APP_BACKEND_API
 
 interface Message {
     from?: string;
@@ -33,7 +34,7 @@ const Chat = () => {
         if (!user?.id) return;
 
         const ws = new WebSocket(
-            `ws://localhost:5000/chat-socket?userId=${user.id}`
+            `${BACKEND_API}/chat-socket?userId=${user.id}`
         );
         socket.current = ws;
 
