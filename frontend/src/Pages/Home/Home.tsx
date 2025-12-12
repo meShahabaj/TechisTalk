@@ -25,10 +25,10 @@ const Home = () => {
 
 
     const navItems = [
-        { label: "Friend Requests", path: "#/friend-requests" },
-        { label: "Search Friends", path: "#/search-friends" },
-        { label: "Your Friends", path: "#/friends" },
-        { label: "Profile", path: "#/profile" },
+        { label: "Friend Requests", path: "friend-requests" },
+        { label: "Search Friends", path: "search-friends" },
+        { label: "Your Friends", path: "friends" },
+        { label: "Profile", path: "profile" },
     ];
 
     return (
