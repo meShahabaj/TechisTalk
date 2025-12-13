@@ -43,7 +43,7 @@ const Friends = () => {
     if (loading) return <Loading />;
 
     return (
-        <div className="p-6 max-w-xl mx-auto">
+        <div className="p-6 max-w-xl mx-auto py-10">
             <h1 className="text-3xl font-bold mb-6 text-white">Your Friends</h1>
 
             {friends.length === 0 ? (

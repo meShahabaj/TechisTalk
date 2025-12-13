@@ -174,7 +174,7 @@ const FriendRequests = () => {
 
     return (
         <div >
-            <div className="max-w-xl mx-auto">
+            <div className="max-w-xl mx-auto py-10">
                 <h1 className="text-3xl font-bold text-white mb-6">Friend Requests</h1>
 
                 {requests.length === 0 ? (

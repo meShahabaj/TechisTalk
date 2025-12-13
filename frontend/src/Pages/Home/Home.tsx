@@ -96,7 +96,7 @@ const Home = () => {
             </aside>
 
             {/* MAIN CONTENT */}
-            <main className="flex-1 p-10 ml-80 overflow-auto bg-gray-50 dark:bg-gray-900">
+            <main className="flex-1 ml-80 overflow-auto bg-gray-50 dark:bg-gray-900">
                 <div className="max-w-4xl mx-auto">
                     <Outlet />
                 </div>

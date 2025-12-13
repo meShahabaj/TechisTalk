@@ -54,7 +54,7 @@ function App() {
           <Route
             path="/login" element={<PublicRoute><Login /></PublicRoute>} />
 
-          <Route path="/chat/:toid" element={<Chat />} />
+
 
           {/* Parent Route */}
           <Route path="/" element={<ProtectedRoute><Home /></ProtectedRoute>}>
@@ -70,6 +70,8 @@ function App() {
 
             <Route path="profile" element={
               <ProtectedRoute><Profile /></ProtectedRoute>} />
+
+            <Route path="/chat/:toid" element={<Chat />} />
           </Route>
 
 

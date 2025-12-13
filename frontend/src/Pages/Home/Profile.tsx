@@ -79,7 +79,7 @@ const Profile = () => {
     return (
         <div>
 
-            <div className="max-w-2xl mx-auto">
+            <div className="max-w-2xl mx-auto py-10">
                 <h2 className="text-3xl font-bold mb-8 text-white">
                     Profile Settings
                 </h2>
