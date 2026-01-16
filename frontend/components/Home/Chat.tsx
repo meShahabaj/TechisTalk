@@ -90,7 +90,7 @@ const Chat = ({ toid }: ChatProps) => {
         if (!user?.id) return;
         if (!toid) return;
 
-        const ws = new WebSocket(`http://localhost:5000/chat-socket?userId=${user.id}`);
+        const ws = new WebSocket(`${BACKEND_API}/chat-socket?userId=${user.id}`);
         socket.current = ws;
 
         ws.onmessage = (event: MessageEvent) => {
