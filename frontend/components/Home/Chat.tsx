@@ -42,7 +42,6 @@ const Chat = ({ toid }: ChatProps) => {
        FETCH AUTH USER
     ======================= */
 
-    console.log(toid)
 
     useEffect(() => {
         const fetchUser = async () => {
@@ -60,9 +59,7 @@ const Chat = ({ toid }: ChatProps) => {
                 }
 
                 setUser(data.user as User);
-                console.log("logged user:", data.user)
             } catch (error) {
-                console.error("Auth fetch error:", error);
                 router.push("/login");
             } finally {
                 setAuthChecked(true);
@@ -74,9 +71,7 @@ const Chat = ({ toid }: ChatProps) => {
 
     // Load recipient
     useEffect(() => {
-        console.log("loading toid")
         if (!toid) return;
-        console.log(toid)
 
         const loadUser = async () => {
             const res = await axios.post(
@@ -85,7 +80,6 @@ const Chat = ({ toid }: ChatProps) => {
             );
 
             setToUser(res.data.user);
-            console.log("to user:", res)
         }
 
         loadUser();
@@ -93,7 +87,6 @@ const Chat = ({ toid }: ChatProps) => {
 
     // WebSocket connection
     useEffect(() => {
-        console.log("connection")
         if (!user?.id) return;
         if (!toid) return;
 
@@ -162,7 +155,7 @@ const Chat = ({ toid }: ChatProps) => {
 
     // Send message
     const sendMessage = () => {
-        if (!input.trim() || !socket.current) return;
+        if (!input.trim() || !socket.current || !user) return;
 
         const msg = {
             to: toid,

@@ -80,7 +80,6 @@ const Main = () => {
                     router.push("/login");
                     return;
                 }
-                console.log("Authenticated user data:", data.user);
 
                 setUser(data.user as User);
             } catch (error) {
