@@ -37,17 +37,17 @@ type PageComponent = (props: PageProps) => ReactElement;
 ======================= */
 
 const pageMap: Record<string, PageComponent> = {
-    "/home/searchfriends": SearchFriends,
-    "/home/profile": Profile,
-    "/home/friendrequests": FriendRequests,
-    "/home/friends": Friends
+    "/searchfriends": SearchFriends,
+    "/profile": Profile,
+    "/friendrequests": FriendRequests,
+    "/friends": Friends
 };
 
 const navItems: NavItem[] = [
-    { label: "Search Friends", path: "/home/searchfriends" },
-    { label: "Profile", path: "/home/profile" },
-    { label: "Friend Requests", path: "/home/friendrequests" },
-    { label: "Friends", path: "/home/friends" }
+    { label: "Search Friends", path: "/searchfriends" },
+    { label: "Profile", path: "/profile" },
+    { label: "Friend Requests", path: "/friendrequests" },
+    { label: "Friends", path: "/friends" }
 ];
 
 /* =======================

@@ -33,7 +33,7 @@ export default function SignUp() {
             const data = await res.json();
 
             if (data?.auth) {
-                router.push("/home/searchfriends");
+                router.push("/searchfriends");
                 return;
             }
 
@@ -97,7 +97,7 @@ export default function SignUp() {
             );
 
             setSuccess("Email verified successfully!");
-            router.push("/home/searchfriends");
+            router.push("/searchfriends");
 
             setUserId(null);
             setFormData({ username: "", email: "", password: "" });

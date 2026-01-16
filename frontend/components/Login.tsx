@@ -24,7 +24,7 @@ const Login = () => {
             const data = await res.json();
 
             if (data?.auth) {
-                router.push("/home/searchfriends");
+                router.push("/searchfriends");
                 return;
             }
 
@@ -57,7 +57,7 @@ const Login = () => {
             );
 
             setSuccess("Login successful!");
-            router.push("/home/searchfriends");
+            router.push("/searchfriends");
         } catch (err: any) {
             if (err.response) setError(err.response.data.message || "Invalid credentials");
             else if (err.request) setError("No response from server");

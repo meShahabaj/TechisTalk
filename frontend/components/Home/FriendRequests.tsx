@@ -99,7 +99,7 @@ const FriendRequests = () => {
                         You have no friend requests.
                     </p>
                     <button
-                        onClick={() => router.push("/home/searchfriends")}
+                        onClick={() => router.push("/searchfriends")}
                         className="px-6 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-700
             transition text-white font-medium shadow-lg"
                     >
