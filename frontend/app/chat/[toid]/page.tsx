@@ -5,10 +5,10 @@ interface PageProps {
     params: Promise<{ toid: string }>;
 }
 
-const ChatPage = async ({ params }: PageProps) => {
+const page = async ({ params }: PageProps) => {
     const { toid } = await params;
 
     return <Chat toid={toid} />;
 };
 
-export default ChatPage;
+export default page;
