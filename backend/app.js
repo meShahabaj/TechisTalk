@@ -6,14 +6,15 @@ import { WebSocketServer } from "ws";
 import http from "http";
 import url from "url";
 
-// import connectDB from "./config/DB.js";
+import connectDB from "./config/DB.js";
+import message from "./models/message.js";
 
 dotenv.config();
 
 const app = express();
 
 // Connect database
-// connectDB();
+connectDB();
 
 // Middleware
 app.use(cors({
@@ -22,6 +23,27 @@ app.use(cors({
 }));
 app.use(express.json());
 app.use(cookieParser());
+
+app.get("/", async (req, res) => {
+    try {
+        const { user1, user2 } = req.query;
+
+        if (!user1 || !user2) {
+            return res.status(400).json({ error: "Missing users" });
+        }
+
+        const messages = await message.find({
+            $or: [
+                { from: user1, to: user2 },
+                { from: user2, to: user1 }
+            ]
+        }).sort({ timestamp: 1 });
+
+        res.json({ messages });
+    } catch (err) {
+        res.status(500).json({ error: "Failed to load messages" });
+    }
+});
 
 // Create HTTP server
 const server = http.createServer(app);
@@ -84,7 +106,7 @@ wss.on("connection", (ws, req) => {
     broadcastStatus(userId, "online");
 
     // Handle client messages
-    ws.on("message", (msg) => {
+    ws.on("message", async (msg) => {
         console.log(`Message from ${userId}:`, msg.toString());
 
         // Example: expect JSON
@@ -108,6 +130,13 @@ wss.on("connection", (ws, req) => {
                 }));
                 return;
             }
+            await message.create({
+                from: userId,
+                to,
+                text,
+                timestamp
+            });
+
 
 
             // Send message to a specific user
