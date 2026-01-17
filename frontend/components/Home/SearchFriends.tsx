@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Bots from "./Bots";
 
 interface UserType {
     _id: string;
@@ -143,6 +144,9 @@ const SearchFriends = ({ user }: Props) => {
                         No users found.
                     </p>
                 )}
+            </div>
+            <div className="-mt-2">
+                <Bots />
             </div>
         </div>
     );
