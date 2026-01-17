@@ -25,6 +25,10 @@ app.use(express.json());
 app.use(cookieParser());
 
 app.get("/", async (req, res) => {
+    return ""
+})
+
+app.get("/", async (req, res) => {
     try {
         const { user1, user2 } = req.query;
 
