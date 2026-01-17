@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import GoogleAuthButton from "./GoogleAuthButton";
 import Image from "next/image";
+import { Eye, EyeOff } from "lucide-react";
 
 export default function SignUp() {
     const router = useRouter();
@@ -22,6 +23,9 @@ export default function SignUp() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const [success, setSuccess] = useState<string | null>(null);
+    const [confirmpassword, setConfirmpassword] = useState<string>("");
+    const [showpasssword, setShowpassword] = useState<boolean>(false);
+    const [showconfirmpasssword, setShowconfirmpassword] = useState<boolean>(false);
 
     useEffect(() => {
         const fetchUser = async () => {
@@ -55,13 +59,19 @@ export default function SignUp() {
         setError(null);
         setSuccess(null);
 
-        if (!formData.username || !formData.email || !formData.password) {
+
+        if (!formData.username || !formData.email || !formData.password || !confirmpassword) {
             setError("All fields are required");
             return;
         }
 
         if (formData.password.length < 6) {
             setError("Password must be at least 6 characters long");
+            return;
+        }
+
+        if (formData.password != confirmpassword) {
+            setError("Passwords should be same")
             return;
         }
 
@@ -128,10 +138,32 @@ export default function SignUp() {
                 </div>
 
                 {/* LEFT COLUMN — FORM (GLASS) */}
+
                 <div className="bg-white/10 backdrop-blur-xl border border-white/20 shadow-2xl rounded-2xl p-10 w-full max-w-md">
+                    {userId && (
+                        <button
+                            className="hover:cursor-pointer text-white flex items-center gap-2"
+                            onClick={() => setUserId(null)}
+                        >
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                className="h-4 w-4"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                                strokeWidth={2}
+                            >
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+                            </svg>
+                            Back
+                        </button>
+                    )}
+
                     <h2 className="text-3xl font-bold text-white text-center mb-6">
                         Create Account
                     </h2>
+                    {error && <p className="text-red-400 text-center mt-2 mb-2">{error}</p>}
+                    {success && <p className="text-green-400 text-center mt-2 mb-2">{success}</p>}
 
                     {!userId ? (
                         <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
@@ -141,7 +173,8 @@ export default function SignUp() {
                                 placeholder="User Name"
                                 value={formData.username}
                                 onChange={handleChange}
-                                className="p-3 bg-white/20 text-white rounded-lg placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                                required
+                                className="p-3 bg-white/20 text-white rounded-lg placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-white"
                             />
 
                             <input
@@ -150,22 +183,51 @@ export default function SignUp() {
                                 placeholder="Email"
                                 value={formData.email}
                                 onChange={handleChange}
-                                className="p-3 bg-white/20 text-white rounded-lg placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                                required
+                                className="p-3 bg-white/20 text-white rounded-lg placeholder-gray-100 focus:outline-none focus:ring-2 focus:ring-white"
                             />
+                            <div className="relative">
 
-                            <input
-                                type="password"
-                                name="password"
-                                placeholder="Password"
-                                value={formData.password}
-                                onChange={handleChange}
-                                className="p-3 bg-white/20 text-white rounded-lg placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-500"
-                            />
+                                <input
+                                    type={showpasssword ? "text" : "password"}
+                                    name="password"
+                                    placeholder="Password"
+                                    value={formData.password}
+                                    required
+                                    onChange={handleChange}
+                                    className="w-full p-3 bg-white/20 text-white rounded-lg placeholder-gray-100 focus:outline-none focus:ring-2 focus:ring-white"
+                                />
+                                <button
+                                    type="button"
+                                    onClick={() => setShowpassword(!showpasssword)}
+                                    className="hover:cursor-pointer absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 text-white"
+                                >
+                                    {showpasssword ? <EyeOff size={20} /> : <Eye size={20} />}
+                                </button>
+                            </div>
+                            <div className="relative">
+                                <input
+                                    type={showconfirmpasssword ? "text" : "password"}
+                                    name="confirmpassword"
+                                    placeholder="Confirm Password"
+                                    value={confirmpassword}
+                                    required
+                                    onChange={(e) => setConfirmpassword(e.target.value)}
+                                    className="w-full p-3 bg-white/20 text-white rounded-lg placeholder-gray-100 focus:outline-none focus:ring-2 focus:ring-white"
+                                />
+                                <button
+                                    type="button"
+                                    onClick={() => setShowconfirmpassword(!showconfirmpasssword)}
+                                    className="hover:cursor-pointer absolute right-3 top-1/2 -translate-y-1/2 text-white"
+                                >
+                                    {showconfirmpasssword ? <EyeOff size={20} /> : <Eye size={20} />}
+                                </button>
+                            </div>
 
                             <button
                                 type="submit"
                                 disabled={loading}
-                                className="w-full py-3 rounded-lg text-white font-semibold bg-purple-600 hover:bg-purple-700 transition"
+                                className="hover:cursor-pointer w-full py-3 rounded-lg text-white font-bold bg-blue-600 hover:bg-blue-800 transition"
                             >
                                 {loading ? "Signing Up..." : "Sign Up"}
                             </button>
@@ -177,13 +239,13 @@ export default function SignUp() {
                                 value={otp}
                                 onChange={handleOtpChange}
                                 placeholder="Enter OTP"
-                                className="p-3 bg-white/20 text-white rounded-lg placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                                className="p-3 bg-white/20 text-white rounded-lg placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
                             />
 
                             <button
                                 onClick={handleVerifyOtp}
                                 disabled={loading}
-                                className="w-full py-3 rounded-lg text-white font-semibold bg-purple-600 hover:bg-purple-700 transition"
+                                className="hover:cursor-pointer w-full py-3 rounded-lg text-white font-semibold bg-blue-600 hover:bg-blue-800 transition"
                             >
                                 {loading ? "Verifying..." : "Verify OTP"}
                             </button>
@@ -192,12 +254,11 @@ export default function SignUp() {
 
                     <GoogleAuthButton />
 
-                    {error && <p className="text-red-400 text-center mt-3">{error}</p>}
-                    {success && <p className="text-green-400 text-center mt-3">{success}</p>}
+
 
                     <p className="text-center mt-4 text-gray-300">
                         Already have an account?
-                        <Link href="/login" className="ml-1 underline">
+                        <Link href="/login" className="ml-2 text-white">
                             Login
                         </Link>
                     </p>

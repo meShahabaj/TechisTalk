@@ -6,7 +6,7 @@ const GoogleAuthButton = () => {
     return (
         <button
             onClick={handleGoogleAuth}
-            className="w-full mt-3 bg-red-500 text-white py-3 rounded-lg font-semibold hover:bg-red-600 transition-all"
+            className="hover:cursor-pointer w-full mt-3 bg-red-500 text-white py-3 rounded-lg font-semibold hover:bg-red-600 transition-all"
         >
             Continue with Google
         </button>
