@@ -130,11 +130,11 @@ const SearchFriends = ({ user }: Props) => {
                             <button
                                 disabled={loadingId === u._id}
                                 onClick={() => sendRequest(u._id)}
-                                className="px-5 py-2 rounded-xl bg-blue-600 text-white 
+                                className="hover:cursor-pointer px-5 py-2 rounded-xl bg-blue-600 text-white 
                 hover:bg-blue-700 transition shadow font-medium 
                 disabled:opacity-50"
                             >
-                                {loadingId === u._id ? "Sending..." : "Connect"}
+                                {loadingId === u._id ? "Sending..." : "Follow"}
                             </button>
                         </div>
                     ))

@@ -8,6 +8,8 @@ import SearchFriends from "./SearchFriends";
 import Profile from "./Profile";
 import FriendRequests from "./FriendRequests";
 import Friends from "./Friends";
+import Loading from "../Loading";
+import Bots from "./Bots";
 
 /* =======================
    TYPES
@@ -38,16 +40,23 @@ type PageComponent = (props: PageProps) => ReactElement;
 
 const pageMap: Record<string, PageComponent> = {
     "/searchfriends": SearchFriends,
-    "/profile": Profile,
+
     "/friendrequests": FriendRequests,
-    "/friends": Friends
+    "/friends": Friends, "/profile": Profile,
+    "/bots": Bots
 };
 
 const navItems: NavItem[] = [
     { label: "Search Friends", path: "/searchfriends" },
-    { label: "Profile", path: "/profile" },
+
     { label: "Friend Requests", path: "/friendrequests" },
-    { label: "Friends", path: "/friends" }
+
+    { label: "Friends", path: "/friends" },
+    {
+        label: "Talk To Programming Languages", path:
+            "/bots"
+    }, { label: "Profile", path: "/profile" },
+
 ];
 
 /* =======================
@@ -58,9 +67,10 @@ const Main = () => {
     const pathname = usePathname();
     const router = useRouter();
 
-    const [loading, setLoading] = useState(false);
     const [user, setUser] = useState<User | null>(null);
     const [authChecked, setAuthChecked] = useState(false);
+    const [menuOpen, setMenuOpen] = useState(false);
+
 
     /* =======================
        FETCH AUTH USER
@@ -93,29 +103,8 @@ const Main = () => {
         fetchUser();
     }, [router]);
 
-    if (!authChecked) return <div>Loading...</div>;
+    if (!authChecked) return <div><Loading /></div>;
     if (!user) return null;
-
-    /* =======================
-       LOGOUT
-    ======================= */
-
-    const handleLogout = async () => {
-        try {
-            setLoading(true);
-            await fetch("/api/auth/logout", {
-                method: "POST",
-                credentials: "include",
-            });
-            router.refresh();
-            router.push("/login");
-        } catch {
-            alert("Logout failed.");
-        } finally {
-            setLoading(false);
-        }
-    };
-
     /* =======================
        RENDER
     ======================= */
@@ -123,21 +112,64 @@ const Main = () => {
     const Page = pageMap[pathname];
 
     return (
-        <div className="flex h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100 dark:from-[#0f1115] dark:via-[#0b0e13] dark:to-[#0b0e13]">
+        <div className="flex h-screen bg-black">
             {/* SIDEBAR */}
+            {/* MOBILE TOP BAR */}
+            <div className="md:hidden fixed top-0 left-0 right-0 z-30 
+  flex items-center justify-between px-5 py-3
+  bg-white/60 dark:bg-[#0b0e13]/70 backdrop-blur-2xl 
+  border-b border-black/10 dark:border-white/5 shadow-sm">
+
+                <button
+                    onClick={() => setMenuOpen(!menuOpen)}
+                    className="w-10 h-10 flex items-center justify-center rounded-xl 
+    bg-black/5 dark:bg-white/10 hover:bg-black/10 dark:hover:bg-white/20 
+    transition text-xl text-gray-800 dark:text-white"
+                >
+                    {!menuOpen && "☰"}
+                </button>
+
+                <h2 className="text-3xl font-extrabold tracking-tight text-white">
+                    Techis Talk
+                </h2>
+
+                {/* spacer for balance */}
+                <div className="w-10" />
+            </div>
+
+
+
+
             <aside
-                className="w-72 h-[95%] m-4 rounded-3xl border border-white/20 dark:border-white/10
-        bg-white/40 dark:bg-gray-900/40 backdrop-blur-3xl shadow-xl
-        flex flex-col gap-6 p-6 fixed"
+                className={`w-72 h-[95%]
+  bg-black h-full border-r-1 border-white/30
+  flex flex-1 flex-col gap-6 p-6 fixed z-40 transition-transform duration-300
+
+  ${menuOpen ? "translate-x-0" : "-translate-x-full"}
+  md:translate-x-0`}
             >
+                {menuOpen && (
+                    <button
+                        onClick={() => setMenuOpen(false)}
+                        className="absolute top-4 right-4 md:hidden
+    w-9 h-9 rounded-xl flex items-center justify-center
+    bg-black/10 dark:bg-white/10
+    hover:bg-black/20 dark:hover:bg-white/20
+    transition text-lg text-gray-800 dark:text-white"
+                    >
+                        ✕
+                    </button>
+                )}
+
+
+
                 {/* LOGO */}
                 <h2
-                    className="text-2xl font-extrabold tracking-tight
-          bg-gradient-to-r from-indigo-500 to-purple-500
-          text-transparent bg-clip-text"
+                    className="text-3xl font-extrabold tracking-tight text-white"
                 >
                     Techis Talk
                 </h2>
+
 
                 {/* USER CARD */}
                 <div
@@ -169,6 +201,7 @@ const Main = () => {
                             <Link
                                 key={item.path}
                                 href={item.path}
+                                onClick={() => setMenuOpen(false)}
                                 className={`relative px-4 py-3 rounded-xl font-medium transition
                 hover:bg-white/30 dark:hover:bg-gray-700/50
                 ${active
@@ -188,19 +221,12 @@ const Main = () => {
                     })}
                 </nav>
 
-                {/* LOGOUT */}
-                <button
-                    onClick={handleLogout}
-                    disabled={loading}
-                    className="mt-auto py-2.5 rounded-xl font-medium bg-red-500
-          text-white hover:bg-red-600 transition disabled:opacity-50"
-                >
-                    {loading ? "…" : "Logout"}
-                </button>
+
             </aside>
 
             {/* MAIN CONTENT */}
-            <main className="flex-1 ml-80 overflow-auto bg-gray-50 dark:bg-gray-900">
+            <main className="p-6 flex-1 md:ml-80 pt-16 md:pt-0 overflow-auto bg-black">
+
                 <div className="max-w-4xl mx-auto">
                     {Page ? <Page user={user} /> : <div>Page Not Found</div>}
                 </div>

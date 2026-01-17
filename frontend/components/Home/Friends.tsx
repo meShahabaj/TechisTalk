@@ -64,69 +64,83 @@ export default function Friends() {
 
 
     return (
-        <div className="p-6 max-w-xl mx-auto py-10">
-            <h1 className="text-3xl font-bold mb-6 text-white">Your Friends</h1>
+        <div className="max-w-3xl mx-auto px-4 py-10">
+            <h1 className="text-3xl font-extrabold mb-8 
+      bg-gradient-to-r from-indigo-500 to-purple-500 
+      text-transparent bg-clip-text">
+                Your Friends
+            </h1>
 
             {friends.length === 0 ? (
-                <div className="flex flex-col items-center justify-center space-y-4 mt-20">
-                    <p className="text-gray-400 text-center text-lg">
-                        You have no friends yet.
+                <div className="flex flex-col items-center justify-center mt-24 space-y-5">
+                    <div className="w-20 h-20 rounded-full bg-gradient-to-br from-indigo-400 to-purple-500 
+          flex items-center justify-center text-3xl shadow-xl text-white">
+                        👥
+                    </div>
+                    <p className="text-gray-400 text-lg text-center">
+                        No friends yet. Start connecting!
                     </p>
                     <button
                         onClick={() => router.push("/search-friends")}
-                        className="px-6 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-700
-                       transition text-white font-medium shadow-lg"
-                    >
+                        className="px-7 py-3 rounded-2xl 
+            bg-indigo-600 hover:bg-indigo-700 
+            text-white font-semibold shadow-lg transition">
                         Find Friends
                     </button>
                 </div>
             ) : (
-                <div className="space-y-4">
+                <div className="grid gap-4 sm:grid-cols-2">
                     {friends.map((friend) => (
                         <div
                             key={friend.id}
-                            className="flex justify-between items-center p-4 border border-gray-800
-                         rounded-2xl shadow-lg bg-gray-900/70 backdrop-blur-lg
-                         transition hover:scale-[1.02] duration-200"
+                            className="w-full p-4 rounded-2xl
+        bg-gray-900/70 backdrop-blur-xl
+        border border-white/10 shadow-md
+        flex items-center justify-between gap-3"
                         >
-                            <div className="flex items-center gap-4">
-                                {/* Avatar */}
-                                <div className="w-12 h-12 rounded-full bg-gradient-to-br from-indigo-400 to-purple-500
-                                flex items-center justify-center text-white font-bold text-lg">
-                                    {friend.username?.[0]?.toUpperCase() || "U"}
+                            {/* Left */}
+                            <div className="flex items-center gap-3 min-w-0">
+                                <div className="w-12 h-12 rounded-full 
+          bg-gradient-to-br from-indigo-400 to-purple-500
+          flex items-center justify-center text-white font-bold text-lg shrink-0">
+                                    {friend.username?.[0]?.toUpperCase()}
                                 </div>
 
-                                {/* Friend Info */}
-                                <div className="flex flex-col">
-                                    <p className="font-semibold text-white">
+                                <div className="min-w-0">
+                                    <p className="font-semibold text-white truncate">
                                         {friend.username}
                                     </p>
-                                    <p className="text-gray-400 text-sm">{friend.email}</p>
+
                                 </div>
                             </div>
 
-                            {/* Actions */}
-                            <div className="flex gap-2">
+                            {/* Right */}
+                            <div className="flex gap-2 shrink-0">
                                 <button
                                     onClick={() => router.push(`/chat/${friend.id}`)}
-                                    className="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-700
-                             text-white font-medium shadow transition"
+                                    className="hover:cursor-pointer px-3 py-2 rounded-xl bg-blue-600 hover:bg-blue-700
+            text-white text-sm font-medium shadow"
                                 >
-                                    Talk
+                                    talk
                                 </button>
 
                                 <button
                                     onClick={() => removeFriend(friend.id)}
-                                    className="px-4 py-2 rounded-xl bg-red-600 hover:bg-red-700
-                             text-white font-medium shadow transition"
+                                    className="hover:cursor-pointer px-3 py-2 rounded-xl bg-red-600 hover:bg-red-700
+            text-white text-sm font-medium shadow"
                                 >
                                     Remove
                                 </button>
                             </div>
                         </div>
                     ))}
+
+
                 </div>
-            )}
-        </div>
+            )
+            }
+        </div >
     );
+
+
 }

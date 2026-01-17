@@ -2,8 +2,28 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
+const BACKEND_API = process.env.NEXT_PUBLIC_BACKEND_API
+const FRONTEND_API = process.env.NEXT_PUBLIC_FRONTEND_API
+
+const ALLOWED_ORIGINS = [
+    BACKEND_API, FRONTEND_API
+];
+
+
 // Middleware function
 export function middleware(req: NextRequest) {
+    const origin = req.headers.get("origin");
+
+    // If it's a CORS request
+    if (origin) {
+        if (!ALLOWED_ORIGINS.includes(origin)) {
+            return NextResponse.json(
+                { error: "Origin not allowed" },
+                { status: 403 }
+            );
+        }
+    }
+
     // Get token from cookies (HttpOnly)
     const token = req.cookies.get("token")?.value;
 

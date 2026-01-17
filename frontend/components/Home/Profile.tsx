@@ -36,33 +36,46 @@ const Profile = ({ user }: Props) => {
                 formData,
                 { withCredentials: true }
             );
-
-            alert("Profile updated successfully!");
             setIsEditing(false);
 
-            window.location.reload();
+            router.refresh();
         } catch (err) {
             console.error(err);
             alert("Failed to update profile");
         }
     };
-
-    // DELETE ACCOUNT
-    const deleteAccount = async () => {
-        if (!window.confirm("This action is permanent. Continue?")) return;
-
+    const handleLogout = async () => {
         try {
             setLoading(true);
-            await axios.delete("/api/profile", {
-                withCredentials: true
+            await fetch("/api/auth/logout", {
+                method: "POST",
+                credentials: "include",
             });
-            router.push("/signup");
+            router.refresh();
+            router.push("/login");
         } catch {
-            alert("Delete failed.");
+            alert("Logout failed.");
         } finally {
             setLoading(false);
         }
     };
+
+    // DELETE ACCOUNT
+    // const deleteAccount = async () => {
+    //     if (!window.confirm("This action is permanent. Continue?")) return;
+
+    //     try {
+    //         setLoading(true);
+    //         await axios.delete("/api/profile", {
+    //             withCredentials: true
+    //         });
+    //         router.push("/signup");
+    //     } catch {
+    //         alert("Delete failed.");
+    //     } finally {
+    //         setLoading(false);
+    //     }
+    // };
 
     return (
         <div>
@@ -84,7 +97,7 @@ const Profile = ({ user }: Props) => {
 
                         <button
                             onClick={() => setIsEditing(true)}
-                            className="px-5 py-2 rounded-xl bg-blue-600 text-white 
+                            className="hover:cursor-pointer px-5 py-2 rounded-xl bg-blue-600 text-white 
                                hover:bg-blue-700 transition shadow"
                         >
                             Edit
@@ -93,17 +106,24 @@ const Profile = ({ user }: Props) => {
                 </div>
 
                 {/* DELETE ACCOUNT */}
-                <div className="mt-8">
+                <div className="mt-8 gap-10">
+                    {/* LOGOUT */}
                     <button
+                        onClick={handleLogout}
+                        disabled={loading}
+                        className="w-full mb-2 hover:cursor-pointer mt-auto py-2.5 rounded-xl font-medium bg-red-500
+          text-white hover:bg-red-600 transition disabled:opacity-50"
+                    >
+                        {loading ? "…" : "Logout"}
+                    </button>
+                    {/* <button
                         onClick={deleteAccount}
                         disabled={loading}
-                        className="w-full py-3 rounded-xl font-semibold 
-                           bg-gradient-to-r from-red-500 to-red-700 
-                           text-white shadow-lg hover:opacity-90 
-                           transition disabled:opacity-50"
+                        className="flex-1 w-full/2 mb-2 hover:cursor-pointer mt-auto py-2.5 rounded-xl font-medium bg-red-500
+          text-white hover:bg-red-600 transition disabled:opacity-50"
                     >
                         {loading ? "Deleting..." : "Delete Account"}
-                    </button>
+                    </button> */}
                 </div>
             </div>
 
@@ -128,30 +148,17 @@ const Profile = ({ user }: Props) => {
                             />
                         </label>
 
-                        <label className="block mb-6">
-                            <span className="text-sm font-semibold">Email</span>
-                            <input
-                                type="text"
-                                className="w-full border border-gray-600 bg-gray-800 text-white p-3 rounded-xl mt-1 
-                                   focus:ring-2 focus:ring-blue-500 outline-none"
-                                value={profile.email}
-                                onChange={(e) =>
-                                    setProfile({ ...profile, email: e.target.value })
-                                }
-                            />
-                        </label>
-
                         <div className="flex justify-end gap-3">
                             <button
                                 onClick={() => setIsEditing(false)}
-                                className="px-5 py-2 rounded-xl bg-gray-700 hover:bg-gray-600 transition"
+                                className="hover:cursor-pointer px-5 py-2 rounded-xl bg-gray-700 hover:bg-gray-600 transition"
                             >
                                 Cancel
                             </button>
 
                             <button
                                 onClick={saveChanges}
-                                className="px-5 py-2 rounded-xl bg-blue-600 text-white 
+                                className="hover:cursor-pointer px-5 py-2 rounded-xl bg-blue-600 text-white 
                                    hover:bg-blue-700 transition shadow"
                             >
                                 Save

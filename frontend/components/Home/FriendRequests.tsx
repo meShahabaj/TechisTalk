@@ -100,7 +100,7 @@ const FriendRequests = () => {
                     </p>
                     <button
                         onClick={() => router.push("/searchfriends")}
-                        className="px-6 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-700
+                        className="hover:cursor-pointer px-6 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-700
             transition text-white font-medium shadow-lg"
                     >
                         Find Friends
@@ -127,7 +127,7 @@ const FriendRequests = () => {
                             <div className="flex gap-2">
                                 <button
                                     onClick={() => acceptRequest(req.from.id)}
-                                    className="px-4 py-2 rounded-xl bg-green-600 hover:bg-green-700 
+                                    className="hover:cursor-pointer px-4 py-2 rounded-xl bg-green-600 hover:bg-green-700 
                   transition shadow text-white font-medium"
                                 >
                                     Accept
@@ -135,7 +135,7 @@ const FriendRequests = () => {
 
                                 <button
                                     onClick={() => rejectRequest(req.from.id)}
-                                    className="px-4 py-2 rounded-xl bg-red-600 hover:bg-red-700 
+                                    className="hover:cursor-pointer px-4 py-2 rounded-xl bg-red-600 hover:bg-red-700 
                   transition shadow text-white font-medium"
                                 >
                                     Reject

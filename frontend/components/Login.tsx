@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import GoogleAuthButton from "./GoogleAuthButton";
 import Image from "next/image";
+import { Eye, EyeOff } from "lucide-react";
 
 const Login = () => {
     const router = useRouter();
@@ -13,6 +14,7 @@ const Login = () => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const [success, setSuccess] = useState<string | null>(null);
+    const [showpasssword, setShowpassword] = useState<boolean>(false)
 
 
 
@@ -92,31 +94,44 @@ const Login = () => {
                     <h2 className="text-3xl font-bold text-white text-center mb-6">
                         Login
                     </h2>
+                    {error && <p className="text-red-400 text-center mb-2">{error}</p>}
+                    {success && <p className="text-green-400 text-center mb-2">{success}</p>}
 
                     <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
 
                         <input
                             type="email"
                             name="email"
+                            required
                             placeholder="Email"
                             value={formData.email}
                             onChange={handleChange}
-                            className="p-3 bg-white/20 text-white placeholder-gray-300 border border-white/30 rounded-lg focus:ring-2 focus:ring-purple-400 outline-none"
+                            className="p-3 bg-white/20 text-white placeholder-gray-300 border border-white/30 rounded-lg focus:ring-2 focus:ring-white outline-none"
                         />
+                        <div className="relative">
 
-                        <input
-                            type="password"
-                            name="password"
-                            placeholder="Password"
-                            value={formData.password}
-                            onChange={handleChange}
-                            className="p-3 bg-white/20 text-white placeholder-gray-300 border border-white/30 rounded-lg focus:ring-2 focus:ring-purple-400 outline-none"
-                        />
+                            <input
+                                type={showpasssword ? "text" : "password"}
+                                name="password"
+                                placeholder="Password"
+                                value={formData.password}
+                                required
+                                onChange={handleChange}
+                                className="w-full p-3 bg-white/20 text-white placeholder-gray-300 border border-white/30 rounded-lg focus:ring-2 focus:ring-white outline-none"
+                            />
+                            <button
+                                type="button"
+                                onClick={() => setShowpassword(!showpasssword)}
+                                className="hover:cursor-pointer absolute right-3 top-1/2 -translate-y-1/2 text-white"
+                            >
+                                {showpasssword ? <EyeOff size={20} /> : <Eye size={20} />}
+                            </button>
+                        </div>
 
                         <button
                             type="submit"
                             disabled={loading}
-                            className={`w-full py-3 rounded-lg text-white font-semibold bg-purple-600 hover:bg-purple-700 transition ${loading ? "opacity-60 cursor-not-allowed" : ""
+                            className={`hover:cursor-pointer w-full py-3 rounded-lg text-white font-semibold bg-blue-600 hover:bg-blue-800 transition ${loading ? "opacity-60 cursor-not-allowed" : ""
                                 }`}
                         >
                             {loading ? "Logging in..." : "Login"}
@@ -127,12 +142,11 @@ const Login = () => {
                         <GoogleAuthButton />
                     </div>
 
-                    {error && <p className="text-red-400 text-center mt-3">{error}</p>}
-                    {success && <p className="text-green-400 text-center mt-3">{success}</p>}
+
 
                     <p className="text-center mt-4 text-gray-300">
                         Don’t have an account?
-                        <a href="/signup" className="text-purple-400 hover:underline ml-1">
+                        <a href="/signup" className="text-white ml-2">
                             Sign Up
                         </a>
                     </p>

@@ -124,3 +124,81 @@ export async function DELETE(req: NextRequest) {
         );
     }
 }
+export async function PUT(req: NextRequest) {
+    try {
+        await connectToDB();
+
+        /* =======================
+           READ TOKEN
+        ======================= */
+        const token = req.cookies.get("token")?.value;
+
+        if (!token) {
+            return NextResponse.json(
+                { message: "Not authenticated" },
+                { status: 401 }
+            );
+        }
+
+        /* =======================
+           VERIFY JWT
+        ======================= */
+        let decoded: DecodedToken;
+        try {
+            decoded = jwt.verify(
+                token,
+                process.env.JWT_SECRET as string
+            ) as DecodedToken;
+        } catch {
+            return NextResponse.json(
+                { message: "Invalid token" },
+                { status: 401 }
+            );
+        }
+
+        /* =======================
+           READ FORM DATA
+        ======================= */
+        const formData = await req.formData();
+        const username = formData.get("username") as string;
+
+        if (!username || username.trim().length < 1) {
+            return NextResponse.json(
+                { message: "Invalid username" },
+                { status: 400 }
+            );
+        }
+
+        /* =======================
+           UPDATE USER
+        ======================= */
+        const updatedUser = await User.findByIdAndUpdate(
+            decoded.id,
+            { username },
+            { new: true }
+        ).select("-password -__v");
+
+        if (!updatedUser) {
+            return NextResponse.json(
+                { message: "User not found" },
+                { status: 404 }
+            );
+        }
+
+        return NextResponse.json(
+            {
+                message: "Profile updated successfully",
+                data: {
+                    username: updatedUser.username
+                },
+            },
+            { status: 200 }
+        );
+    } catch (error: any) {
+        console.error("Update error:", error);
+        return NextResponse.json(
+            { message: "Failed to update profile" },
+            { status: 500 }
+        );
+    }
+}
