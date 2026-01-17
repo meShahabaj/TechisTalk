@@ -11,7 +11,7 @@ const ALLOWED_ORIGINS = [
 
 
 // Middleware function
-export function middleware(req: NextRequest) {
+export function proxy(req: NextRequest) {
     const origin = req.headers.get("origin");
 
     // If it's a CORS request
