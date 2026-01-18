@@ -128,7 +128,7 @@ export default function SignUp() {
 
                 {/* RIGHT COLUMN — TEXT (GLASS) */}
                 <div className="hidden sm:block bg-white/10 backdrop-blur-xl border border-white/20 shadow-2xl rounded-2xl p-12 max-w-md text-center">
-                    <img src="/Gemini_Generated_Image_15mgt815mgt815mg.png" alt="Techis Talk Logo" width={140} height={140} className="mx-auto mb-4 float" />
+                    <img src="/favicon.ico" alt="Techis Talk Logo" width={140} height={140} className="mx-auto mb-4 float" />
                     <h1 className="text-white text-4xl font-bold mb-4">
                         Techis Talk
                     </h1>
