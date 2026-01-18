@@ -28,7 +28,7 @@ app.get("/", async (req, res) => {
     return ""
 })
 
-app.get("/", async (req, res) => {
+app.get("/load", async (req, res) => {
     try {
         const { user1, user2 } = req.query;
 
@@ -100,8 +100,6 @@ wss.on("connection", (ws, req) => {
 
     onlineUsers.add(userId);
 
-    console.log(`User connected: ${userId}`);
-
     // Save socket
     userSockets.set(userId, ws);
 
@@ -111,7 +109,6 @@ wss.on("connection", (ws, req) => {
 
     // Handle client messages
     ws.on("message", async (msg) => {
-        console.log(`Message from ${userId}:`, msg.toString());
 
         // Example: expect JSON
         try {
@@ -157,7 +154,6 @@ wss.on("connection", (ws, req) => {
     ws.on("close", () => {
         userSockets.delete(userId);
         onlineUsers.delete(userId);
-        console.log("User disconnected:", userId);
         broadcastStatus(userId, "offline");
     });
 });

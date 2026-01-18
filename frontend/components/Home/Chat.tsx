@@ -6,9 +6,6 @@ import { useRouter } from "next/navigation";
 import Loading from "../Loading";
 import EmojiPicker from 'emoji-picker-react';
 
-
-
-
 const BACKEND_API = process.env.NEXT_PUBLIC_BACKEND_API;
 
 interface User {
@@ -138,7 +135,7 @@ const Chat = ({ toid }: ChatProps) => {
         if (!user?.id || !toid || !hasMore) return;
 
         try {
-            const res = await axios.get(`${BACKEND_API}`, {
+            const res = await axios.get(`${BACKEND_API}/load`, {
                 params: {
                     user1: user.id,
                     user2: toid,

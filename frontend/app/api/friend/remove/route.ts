@@ -34,7 +34,6 @@ export async function POST(req: NextRequest) {
            BODY
         ======================= */
         const { friendId } = await req.json();
-        console.log(friendId)
 
 
         if (!friendId) {
@@ -50,8 +49,6 @@ export async function POST(req: NextRequest) {
         const user = await User.findById(userId);
         const friend = await User.findById(friendId);
 
-        console.log(user)
-        console.log(friend)
 
         if (!user || !friend) {
             return NextResponse.json(
@@ -73,8 +70,6 @@ export async function POST(req: NextRequest) {
             (f: any) => !f._id.equals(userObjId)
         );
 
-        console.log(user)
-        console.log(friend)
 
         await user.save();
         await friend.save();

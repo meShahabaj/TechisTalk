@@ -6,7 +6,6 @@ export async function POST(req: NextRequest) {
     try {
         const body = await req.json();
         const { id } = body;
-        console.log(id)
 
         if (!id) {
             return new Response(JSON.stringify({ message: "Missing user ID" }), {
