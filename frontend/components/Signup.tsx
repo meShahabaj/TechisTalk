@@ -119,27 +119,55 @@ export default function SignUp() {
         }
     };
     return (
-        <div className="relative min-h-screen w-full overflow-hidden">
+        <div className="relative min-h-screen w-full overflow-x-hidden">
+
             {/* Background */}
             <div className="absolute inset-0 bg-gradient-to-l from-black to-blue-900 z-[1]" />
 
             {/* GRID CONTAINER */}
-            <div className="relative z-[2] min-h-screen grid grid-cols-1 md:grid-cols-2 place-items-center px-8 ">
+            <div className="relative z-[2] min-h-screen grid grid-cols-1 md:grid-cols-2 place-items-center px-4 sm:px-8">
+
+                {/* MOBILE HEADER */}
+                <div className="block lg:hidden w-full text-center">
+                    <div className="flex justify-center items-center gap-3">
+                        <Image
+                            src="/favicon.ico"
+                            alt="Techis Talk Logo"
+                            width={50}
+                            height={50}
+                            className="mb-3"
+                        />
+                        <h1 className="text-4xl font-extrabold text-white tracking-wide">
+                            Techis Talk
+                        </h1>
+                    </div>
+                    <p className="text-gray-300 text-sm mt-1">
+                        A modern place where professionals chat and collaborate.
+                    </p>
+                </div>
 
                 {/* RIGHT COLUMN — TEXT (GLASS) */}
-                <div className="hidden sm:block bg-white/10 backdrop-blur-xl border border-white/20 shadow-2xl rounded-2xl p-12 max-w-md text-center">
-                    <img src="/favicon.ico" alt="Techis Talk Logo" width={140} height={140} className="mx-auto mb-4 float" />
-                    <h1 className="text-white text-4xl font-bold mb-4">
+                <div className="hidden lg:block bg-white/10 backdrop-blur-xl border border-white/20 shadow-2xl rounded-2xl p-8 lg:p-12 max-w-md text-center">
+
+                    <Image
+                        src="/favicon.ico"
+                        alt="Techis Talk Logo"
+                        width={100}
+                        height={100}
+                        className="mx-auto mb-4 float sm:w-[140px] sm:h-[140px]"
+                    />
+
+                    <h1 className="text-4xl tracking-wide font-extrabold text-white mb-8 text-center">
                         Techis Talk
                     </h1>
                     <p className="text-gray-300 text-lg leading-relaxed">
                         A modern place where professionals chat and collaborate.
                     </p>
                 </div>
-
                 {/* LEFT COLUMN — FORM (GLASS) */}
 
-                <div className="bg-white/10 backdrop-blur-xl border border-white/20 shadow-2xl rounded-2xl p-10 w-full max-w-md">
+                <div className="md:p-10 bg-white/10 backdrop-blur-xl border border-white/20 shadow-2xl rounded-2xl p-10 w-full max-w-md">
+
                     {userId && (
                         <button
                             className="hover:cursor-pointer text-white flex items-center gap-2"
@@ -159,7 +187,8 @@ export default function SignUp() {
                         </button>
                     )}
 
-                    <h2 className="text-3xl font-bold text-white text-center mb-6">
+                    <h2 className="text-3xl sm:text-3xl font-bold text-white text-center mb-6">
+
                         Create Account
                     </h2>
                     {error && <p className="text-red-400 text-center mt-2 mb-2">{error}</p>}
@@ -174,7 +203,7 @@ export default function SignUp() {
                                 value={formData.username}
                                 onChange={handleChange}
                                 required
-                                className="p-3 bg-white/20 text-white rounded-lg placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-white"
+                                className="sm:p-4 p-3 bg-white/20 text-white rounded-lg placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-white"
                             />
 
                             <input

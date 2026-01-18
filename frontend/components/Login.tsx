@@ -76,9 +76,27 @@ const Login = () => {
 
             {/* Left gradient overlay for extra space */}
             <div className="absolute inset-0 bg-gradient-to-l from-black to-blue-900 z-[1]" />
-            <div className="relative z-[2] min-h-screen grid grid-cols-1 md:grid-cols-2 place-items-center px-8 ">
+            <div className="relative z-[2] min-h-screen grid grid-cols-1 md:grid-cols-2 place-items-center">
+                {/* mobile  header */}
+                <div className="block lg:hidden w-full text-center">
+                    <div className="flex justify-center items-center gap-3">
+                        <Image
+                            src="/favicon.ico"
+                            alt="Techis Talk Logo"
+                            width={50}
+                            height={50}
+                            className="mb-3"
+                        />
+                        <h1 className="text-4xl font-extrabold text-white tracking-wide">
+                            Techis Talk
+                        </h1>
+                    </div>
+                    <p className="text-gray-300 text-sm mt-1">
+                        A modern place where professionals chat and collaborate.
+                    </p>
+                </div>
                 {/* RIGHT COLUMN — TEXT (GLASS) */}
-                <div className="hidden sm:block bg-white/10 backdrop-blur-xl border border-white/20 shadow-2xl rounded-2xl p-12 max-w-md text-center">
+                <div className="hidden lg:block bg-white/10 backdrop-blur-xl border border-white/20 shadow-2xl rounded-2xl p-12 max-w-md text-center">
                     <img src="/favicon.ico" alt="Techis Talk Logo" width={140} height={140} className="mx-auto mb-4 float" />
                     <h1 className="text-white text-4xl font-bold mb-4">
                         Techis Talk
