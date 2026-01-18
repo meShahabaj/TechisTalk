@@ -68,6 +68,10 @@ const FriendRequests = () => {
         loadRequests();
     };
 
+    if (loading) {
+        return <div><Loading /></div>
+    }
+
 
     /* =======================
        RENDER

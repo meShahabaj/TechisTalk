@@ -4,10 +4,18 @@ import { useEffect, useState } from "react";
 import Bots from "./Bots";
 import Loading from "../Loading";
 
+interface Ref {
+    _id: string;
+    createdAt: string;
+}
+
 interface UserType {
     _id: string;
     username: string;
+    friends: Ref[];
+    friendRequests: Ref[];
 }
+
 
 interface Props {
     user: {
@@ -38,6 +46,7 @@ const SearchFriends = ({ user }: Props) => {
 
                 const data = await res.json();
                 setUsers(data.users || []);
+                console.log(data.users)
             } catch (err) {
                 console.error("Failed to load users:", err);
             } finally {
@@ -70,8 +79,21 @@ const SearchFriends = ({ user }: Props) => {
             if (!res.ok) {
                 throw new Error(data.message);
             }
+            setUsers(prev =>
+                prev.map(u =>
+                    u._id === toUserId
+                        ? {
+                            ...u,
+                            friendRequests: [
+                                ...u.friendRequests,
+                                { _id: user.id, createdAt: new Date().toISOString() }
+                            ]
+                        }
+                        : u
+                )
+            );
 
-            alert("Friend request sent!");
+
         } catch (err: any) {
             alert(err.message || "Failed to send request");
         } finally {
@@ -82,13 +104,12 @@ const SearchFriends = ({ user }: Props) => {
     /* =======================
        FILTER USERS
     ======================= */
-    const filteredUsers = users.filter(
-        (u) =>
-            u.username.toLowerCase().includes(search.toLowerCase()) &&
-            u._id !== user.id &&
-            !user.friends.includes(u._id) &&
-            !user.friendRequests.includes(u._id)
+    const filteredUsers = users.filter(u =>
+        u.username.toLowerCase().includes(search.toLowerCase()) &&
+        u._id !== user.id
     );
+
+
     if (loading) { return <div><Loading /></div> }
 
     /* =======================
@@ -114,42 +135,58 @@ const SearchFriends = ({ user }: Props) => {
             {/* USERS LIST */}
             <div className="flex flex-col gap-4">
                 {filteredUsers.length > 0 ? (
-                    filteredUsers.map((u) => (
-                        <div
-                            key={u._id}
-                            className="bg-gray-900/80 backdrop-blur-lg p-5 rounded-2xl 
+                    filteredUsers.map((u) => {
+                        const isFriend = u.friends.some(f => f._id === user.id);
+                        const sentByMe = u.friendRequests.some(r => r._id === user.id);
+                        const receivedByMe = user.friendRequests.includes(u._id);
+                        return (
+
+                            <div
+                                key={u._id}
+                                className="bg-gray-900/80 backdrop-blur-lg p-5 rounded-2xl 
               border border-gray-700 shadow-lg flex items-center 
               justify-between transition hover:scale-[1.02]"
-                        >
-                            <div className="flex items-center gap-4">
-                                <div
-                                    className="w-12 h-12 rounded-full bg-gradient-to-br 
+                            >
+                                <div className="flex items-center gap-4">
+                                    <div
+                                        className="w-12 h-12 rounded-full bg-gradient-to-br 
                   from-indigo-400 to-purple-500 flex items-center 
                   justify-center text-white font-bold text-lg"
-                                >
-                                    {u.username[0].toUpperCase()}
+                                    >
+                                        {u.username[0].toUpperCase()}
+                                    </div>
+                                    <p className="text-white font-semibold text-lg">
+                                        {u.username}
+                                    </p>
                                 </div>
-                                <p className="text-white font-semibold text-lg">
-                                    {u.username}
-                                </p>
-                            </div>
 
-                            <button
-                                disabled={loadingId === u._id}
-                                onClick={() => sendRequest(u._id)}
-                                className="hover:cursor-pointer px-5 py-2 rounded-xl bg-blue-600 text-white 
+                                <button
+                                    disabled={loadingId === u._id || isFriend || sentByMe}
+
+
+                                    onClick={() => sendRequest(u._id)}
+                                    className="hover:cursor-pointer px-5 py-2 rounded-xl bg-blue-600 text-white 
                 hover:bg-blue-700 transition shadow font-medium 
                 disabled:opacity-50"
-                            >
-                                {loadingId === u._id ? "Sending..." : "Follow"}
-                            </button>
-                        </div>
-                    ))
-                ) : (
-                    <p className="text-gray-400 text-center mt-6">
-                        No users found.
-                    </p>
-                )}
+                                >
+                                    {loadingId === u._id
+                                        ? "Sending..."
+                                        : isFriend
+                                            ? "Friends"
+                                            : sentByMe
+                                                ? "Sent"
+                                                : "Follow"}
+
+                                </button>
+                            </div>
+                        )
+                    }))
+                    : (
+                        <p className="text-gray-400 text-center mt-6">
+                            No users found.
+                        </p>
+                    )
+                }
             </div>
             <div className="-mt-2">
                 <Bots />

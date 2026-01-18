@@ -49,7 +49,7 @@ export async function GET(req: NextRequest) {
         const friendsDetails = await Promise.all(
             user.friends.map(async (friendId: mongoose.Types.ObjectId) => {
                 const friend = await User.findById(friendId).select(
-                    "username email"
+                    "username email friendRequests friends"
                 );
 
                 return friend
@@ -57,6 +57,8 @@ export async function GET(req: NextRequest) {
                         id: friend._id.toString(),
                         username: friend.username,
                         email: friend.email,
+                        friendRequests: friend.friendRequests,
+                        friends: friend.friends
                     }
                     : null;
             })
