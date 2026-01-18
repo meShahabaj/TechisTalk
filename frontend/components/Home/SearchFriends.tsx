@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Bots from "./Bots";
+import Loading from "../Loading";
 
 interface UserType {
     _id: string;
@@ -22,12 +23,14 @@ const SearchFriends = ({ user }: Props) => {
     const [users, setUsers] = useState<UserType[]>([]);
     const [search, setSearch] = useState("");
     const [loadingId, setLoadingId] = useState<string | null>(null);
+    const [loading, setLoading] = useState<boolean>(false)
 
     /* =======================
        LOAD ALL USERS
     ======================= */
     useEffect(() => {
         const loadUsers = async () => {
+            setLoading(true)
             try {
                 const res = await fetch("/api/allusers", {
                     credentials: "include",
@@ -37,6 +40,8 @@ const SearchFriends = ({ user }: Props) => {
                 setUsers(data.users || []);
             } catch (err) {
                 console.error("Failed to load users:", err);
+            } finally {
+                setLoading(false)
             }
         };
 
@@ -84,6 +89,7 @@ const SearchFriends = ({ user }: Props) => {
             !user.friends.includes(u._id) &&
             !user.friendRequests.includes(u._id)
     );
+    if (loading) { return <div><Loading /></div> }
 
     /* =======================
        RENDER

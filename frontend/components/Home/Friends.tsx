@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import Loading from "../Loading";
 
 interface Friend {
     id: string;
@@ -18,6 +19,7 @@ export default function Friends() {
        LOAD FRIENDS
     ======================= */
     const loadFriends = async () => {
+        setLoading(true)
         try {
             const res = await fetch("/api/friend/get", {
                 credentials: "include",
@@ -28,7 +30,7 @@ export default function Friends() {
             const data = await res.json();
             setFriends(data.friends);
         } catch (error) {
-            console.error("Failed to load friends:", error);
+            console.error("Failed to load friends");
         } finally {
             setLoading(false);
         }
@@ -61,7 +63,7 @@ export default function Friends() {
             console.error("Failed to remove friend:", error);
         }
     };
-
+    if (loading) { return <div><Loading /></div> }
 
     return (
         <div className="max-w-3xl mx-auto px-4 py-10">
@@ -71,74 +73,75 @@ export default function Friends() {
                 Your Friends
             </h1>
 
-            {friends.length === 0 ? (
-                <div className="flex flex-col items-center justify-center mt-24 space-y-5">
-                    <div className="w-20 h-20 rounded-full bg-gradient-to-br from-indigo-400 to-purple-500 
+            {loading ? <Loading /> : <div>{
+                friends.length === 0 ? (
+                    <div className="flex flex-col items-center justify-center mt-24 space-y-5">
+                        <div className="w-20 h-20 rounded-full bg-gradient-to-br from-indigo-400 to-purple-500 
           flex items-center justify-center text-3xl shadow-xl text-white">
-                        👥
-                    </div>
-                    <p className="text-gray-400 text-lg text-center">
-                        No friends yet. Start connecting!
-                    </p>
-                    <button
-                        onClick={() => router.push("/search-friends")}
-                        className="px-7 py-3 rounded-2xl 
+                            👥
+                        </div>
+                        <p className="text-gray-400 text-lg text-center">
+                            No friends yet. Start connecting!
+                        </p>
+                        <button
+                            onClick={() => router.push("/search-friends")}
+                            className="px-7 py-3 rounded-2xl 
             bg-indigo-600 hover:bg-indigo-700 
             text-white font-semibold shadow-lg transition">
-                        Find Friends
-                    </button>
-                </div>
-            ) : (
-                <div className="grid gap-4 sm:grid-cols-2">
-                    {friends.map((friend) => (
-                        <div
-                            key={friend.id}
-                            className="w-full p-4 rounded-2xl
+                            Find Friends
+                        </button>
+                    </div>
+                ) : (
+                    <div className="grid gap-4 sm:grid-cols-2">
+                        {friends.map((friend) => (
+                            <div
+                                key={friend.id}
+                                className="w-full p-4 rounded-2xl
         bg-gray-900/70 backdrop-blur-xl
         border border-white/10 shadow-md
         flex items-center justify-between gap-3"
-                        >
-                            {/* Left */}
-                            <div className="flex items-center gap-3 min-w-0">
-                                <div className="w-12 h-12 rounded-full 
+                            >
+                                {/* Left */}
+                                <div className="flex items-center gap-3 min-w-0">
+                                    <div className="w-12 h-12 rounded-full 
           bg-gradient-to-br from-indigo-400 to-purple-500
           flex items-center justify-center text-white font-bold text-lg shrink-0">
-                                    {friend.username?.[0]?.toUpperCase()}
+                                        {friend.username?.[0]?.toUpperCase()}
+                                    </div>
+
+                                    <div className="min-w-0">
+                                        <p className="font-semibold text-white truncate">
+                                            {friend.username}
+                                        </p>
+
+                                    </div>
                                 </div>
 
-                                <div className="min-w-0">
-                                    <p className="font-semibold text-white truncate">
-                                        {friend.username}
-                                    </p>
+                                {/* Right */}
+                                <div className="flex gap-2 shrink-0">
+                                    <button
+                                        onClick={() => router.push(`/chat/${friend.id}`)}
+                                        className="hover:cursor-pointer px-3 py-2 rounded-xl bg-blue-600 hover:bg-blue-700
+            text-white text-sm font-medium shadow"
+                                    >
+                                        talk
+                                    </button>
 
+                                    <button
+                                        onClick={() => removeFriend(friend.id)}
+                                        className="hover:cursor-pointer px-3 py-2 rounded-xl bg-red-600 hover:bg-red-700
+            text-white text-sm font-medium shadow"
+                                    >
+                                        Remove
+                                    </button>
                                 </div>
                             </div>
-
-                            {/* Right */}
-                            <div className="flex gap-2 shrink-0">
-                                <button
-                                    onClick={() => router.push(`/chat/${friend.id}`)}
-                                    className="hover:cursor-pointer px-3 py-2 rounded-xl bg-blue-600 hover:bg-blue-700
-            text-white text-sm font-medium shadow"
-                                >
-                                    talk
-                                </button>
-
-                                <button
-                                    onClick={() => removeFriend(friend.id)}
-                                    className="hover:cursor-pointer px-3 py-2 rounded-xl bg-red-600 hover:bg-red-700
-            text-white text-sm font-medium shadow"
-                                >
-                                    Remove
-                                </button>
-                            </div>
-                        </div>
-                    ))}
+                        ))}
 
 
-                </div>
-            )
-            }
+                    </div>
+                )
+            }</div>}
         </div >
     );
 
