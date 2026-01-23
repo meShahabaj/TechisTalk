@@ -3,7 +3,7 @@ import type { MetadataRoute } from "next";
 const pages = ["signup", "login", "searchfriends", "friendrequests", "friends", "bots", "profile"];
 
 export default function sitemap(): MetadataRoute.Sitemap {
-    const baseUrl = process.env.FRONTEND_URL;
+    const baseUrl = process.env.FRONTEND_API;
 
     const pagesUrl = pages.map(page => ({
         url: `${baseUrl}/${page}`,
