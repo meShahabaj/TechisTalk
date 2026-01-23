@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 
-const BACKEND_API = process.env.NEXT_PUBLIC_BACKEND_API
+const BACKEND_API = process.env.BACKEND_API
 export default function Wakeup() {
     useEffect(() => {
         async function run() {

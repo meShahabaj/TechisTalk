@@ -18,7 +18,7 @@ connectDB();
 
 // Middleware
 app.use(cors({
-    origin: ["http://localhost:3000", "https://techistalk.vercel.app"],
+    origin: [process.env.FRONTEND_API],
     credentials: true
 }));
 app.use(express.json());

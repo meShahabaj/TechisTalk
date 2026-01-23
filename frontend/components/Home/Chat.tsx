@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import Loading from "../Loading";
 import EmojiPicker from 'emoji-picker-react';
 
-const BACKEND_API = process.env.NEXT_PUBLIC_BACKEND_API;
+const BACKEND_API = process.env.BACKEND_API;
 
 interface User {
     id: string;

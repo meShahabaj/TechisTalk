@@ -76,7 +76,7 @@ export const GET = async (req: NextRequest) => {
 
         // ✅ Redirect with cookie set
         const response = NextResponse.redirect(
-            process.env.FRONTEND_API as string
+            process.env.FRONTEND_API_HOME as string
         );
 
         response.cookies.set({

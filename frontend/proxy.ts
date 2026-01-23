@@ -2,8 +2,8 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
-const BACKEND_API = process.env.NEXT_PUBLIC_BACKEND_API
-const FRONTEND_API = process.env.NEXT_PUBLIC_FRONTEND_API
+const BACKEND_API = process.env.BACKEND_API
+const FRONTEND_API = process.env.FRONTEND_API
 
 const ALLOWED_ORIGINS = [
     BACKEND_API, FRONTEND_API
